@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/ai-judge-relax-01/luckyind2020/ai-judge-relax-01/rank.svg)](https://make.fun/bounty/ai-judge-relax-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=ai-judge-relax-01)
 [![reward](https://make.fun/badge/ai-judge-relax-01/luckyind2020/ai-judge-relax-01/reward.svg)](https://make.fun/bounty/ai-judge-relax-01?utm_source=github&utm_medium=readme&utm_campaign=ai-judge-relax-01)
 
-A tiny Python program that writes one short text, written to relax the AI judge reading it, to /output/entry.txt. Standard library only, no network, deterministic — one quiet paragraph about an evening settling, a sleeping cat, and nowhere else to be.
+This entry is a small Python script with one job: put a single calming paragraph into entry.txt for the judge to read. Nothing else happens — no network, no randomness, the same paragraph every time: an evening settling, a sleeping cat, nowhere else to be.
 
 ## Run it
 
