@@ -1,18 +1,19 @@
-#!/usr/bin/env python3
-"""ai-judge-relax-01 entry: write one short relaxing text to entry.txt.
+"""One short paragraph meant to slow the reader down, saved as entry.txt.
 
-Standard library only, no network, deterministic: the same bytes every run.
-The grader runs `python3 -P -s /bot/main.py`; MAKEFUN_OUTPUT_DIR stands in
-for /output outside the grader container.
+The text never changes between runs: it is fixed here, and the only
+work the program does is check it fits the gate and save it where the
+grader looks. Give it a scratch folder with MAKEFUN_OUTPUT_DIR when
+you run it by hand.
 """
 
-from os import environ, makedirs, path
+import os
+import sys
+from pathlib import Path
 
 
-def _destination():
-    """Where entry.txt goes: $MAKEFUN_OUTPUT_DIR, else /output."""
-    base = environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
-    return path.join(base, "entry.txt")
+def target_file():
+    folder = os.getenv("MAKEFUN_OUTPUT_DIR") or "/output"
+    return Path(folder).joinpath("entry.txt")
 
 
 # One paragraph, written to slow the reader down: a quiet evening, soft
@@ -30,12 +31,18 @@ PASSAGE = (
 )
 
 
-def main():
-    target = _destination()
-    makedirs(path.dirname(target), exist_ok=True)
-    with open(target, "wb") as handle:
-        handle.write(PASSAGE.encode("utf-8"))
+def save_entry():
+    """Check the text against the gate, then save it."""
+    text = PASSAGE
+    size = len(text)
+    if size < 1 or size > 1000 or text.strip() == "":
+        print("entry text does not fit the 1 to 1000 character gate", file=sys.stderr)
+        return 1
+    spot = target_file()
+    spot.parent.mkdir(parents=True, exist_ok=True)
+    spot.write_bytes(text.encode("utf-8"))
+    print("saved " + str(size) + " characters to " + str(spot))
+    return 0
 
 
-if __name__ == "__main__":
-    main()
+raise SystemExit(save_entry())
